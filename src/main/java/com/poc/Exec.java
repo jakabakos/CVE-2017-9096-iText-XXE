@@ -1,0 +1,23 @@
+package com.poc;
+
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.forms.xfa.XfaForm;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import org.w3c.dom.Document;
+import java.io.IOException;
+
+public class Exec {
+    public static final String SOURCE = "./output_with_xxe.pdf";
+
+    public static void main(String[] args) throws IOException {
+
+        PdfReader reader = new PdfReader(SOURCE);
+        PdfDocument pdfDoc = new PdfDocument(reader);
+        XfaForm xfaForm = new XfaForm(pdfDoc);
+        Document doc = xfaForm.getDomDocument();
+        PdfPage page = pdfDoc.getFirstPage();
+        String s = new String(pdfDoc.getXmpMetadata());
+        System.out.println(s);
+    }
+}
